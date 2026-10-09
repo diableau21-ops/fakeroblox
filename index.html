@@ -399,7 +399,7 @@ async function renderF(){
     $('fh').textContent = 'Résultats Roblox';
 
 } catch (error) {
-  $('fh').textContent = 'Erreur : ' + error.message;
+ $('fh').textContent = 'Erreur : ' + String(error);
   console.log('Erreur Roblox :', error);
 }
 }

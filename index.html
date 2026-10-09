@@ -398,10 +398,10 @@ async function renderF(){
 
     $('fh').textContent = 'Résultats Roblox';
 
-  } catch (error) {
-    $('fh').textContent = 'Recherche indisponible';
-    console.log('Erreur Roblox :', error);
-  }
+} catch (error) {
+  $('fh').textContent = 'Erreur : ' + error.message;
+  console.log('Erreur Roblox :', error);
+}
 }
 function addRow(n,e,c,sub){
 var b=document.createElement('button');

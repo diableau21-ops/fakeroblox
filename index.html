@@ -480,5 +480,25 @@ try{var u=URL.createObjectURL(new Blob([h],{type:'text/html'}));var a=document.c
 $('exp').onclick=expPage;$('exp').onkeydown=function(e){if(e.key==='Enter'||e.key===' ')expPage()};
 })();
 </script>
-</body>
+<!-- Recherche de profils Roblox publics -->
+<section id="roblox-search" style="margin:20px auto;padding:20px;max-width:500px;background:#101c27;color:white;border-radius:14px;font-family:Arial,sans-serif">
+  <h2>🔎 Rechercher un joueur Roblox</h2>
+  <p>Recherche un joueur et consulte son profil public.</p>
+
+  <form action="https://www.roblox.com/search/users" method="get" target="_blank">
+    <input
+      type="text"
+      name="keyword"
+      placeholder="Nom d'utilisateur Roblox"
+      required
+      style="width:100%;box-sizing:border-box;padding:12px;border-radius:8px;border:1px solid #168ec7;margin-bottom:12px"
+    >
+    <button
+      type="submit"
+      style="padding:12px 18px;background:#168ec7;color:white;border:0;border-radius:8px;cursor:pointer"
+    >
+      Rechercher sur Roblox
+    </button>
+  </form>
+</section></body>
 </html>

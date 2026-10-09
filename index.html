@@ -377,7 +377,8 @@ var a=document.createElement('div');
 a.className='fa';
 fillAv(a,e,c);
 if(typeof e==='string'&&e.indexOf('@@')===0){
-afficherAvatarRoblox(e.slice(2),a);
+  a.textContent='…';
+  afficherAvatarRoblox(e.slice(2),a);
 }
 var d=document.createElement('div');
 var t=document.createElement('b');

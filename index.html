@@ -349,8 +349,39 @@ function renderF(){var q=$('q').value.trim().toLowerCase();var fl=$('fl');fl.tex
 FR.filter(function(f){return !q||f[0].toLowerCase().indexOf(q)>-1}).forEach(function(f){addRow(f[0],f[1],f[2],'@'+f[0])});
 var raw=$('q').value.trim();if(raw)fakeNames(raw).forEach(function(n){if(!FR.some(function(f){return f[0].toLowerCase()===n.toLowerCase()}))addRow(n,'@@'+n,'#2a2d36','@'+n)});
 $('fh').textContent=q?'Results':'My friends (8)'}
-function addRow(n,e,c,sub){var b=document.createElement('button');b.className='fr2';var a=document.createElement('div');a.className='fa';fillAv(a,e,c);var d=document.createElement('div');var t=document.createElement('b');t.textContent=n;var u=document.createElement('span');u.textContent=sub;d.appendChild(t);d.appendChild(u);b.appendChild(a);b.appendChild(d);b.onclick=function(){sel=[n,e,c];fillAv($('pa'),e,c);$('pn').textContent=n;$('st1').style.display='none';$('st3').style.display='none';$('st2').style.display='block';msg('','');setAmt(200);$('go').textContent='Next';$('go').dataset.done='';$('go').disabled=false};$('fl').appendChild(b)}
-async function afficherAvatarRoblox(username, element) {
+function addRow(n,e,c,sub){
+var b=document.createElement('button');
+b.className='fr2';
+var a=document.createElement('div');
+a.className='fa';
+fillAv(a,e,c);
+if(typeof e==='string'&&e.indexOf('@@')===0){
+afficherAvatarRoblox(e.slice(2),a);
+}
+var d=document.createElement('div');
+var t=document.createElement('b');
+t.textContent=n;
+var u=document.createElement('span');
+u.textContent=sub;
+d.appendChild(t);
+d.appendChild(u);
+b.appendChild(a);
+b.appendChild(d);
+b.onclick=function(){
+sel=[n,e,c];
+fillAv($('pa'),e,c);
+$('pn').textContent=n;
+$('st1').style.display='none';
+$('st3').style.display='none';
+$('st2').style.display='block';
+msg('','');
+setAmt(200);
+$('go').textContent='Next';
+$('go').dataset.done='';
+$('go').disabled=false
+};
+$('fl').appendChild(b)
+}async function afficherAvatarRoblox(username, element) {
   try {
     const response = await fetch(
       'https://users.roblox.com/v1/usernames/users',

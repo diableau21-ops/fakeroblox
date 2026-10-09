@@ -264,7 +264,7 @@ h1{letter-spacing:-.03em}
 <div class="fo" id="fo"><button data-f="sys" style="font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">System</button><button data-f="ser" style="font-family:Georgia,'Times New Roman',serif">Serif</button><button data-f="mon" style="font-family:ui-monospace,Menlo,Consolas,'Courier New',monospace">Monospace</button><button data-f="rnd" style="font-family:ui-rounded,'Trebuchet MS','Segoe UI',sans-serif">Rounded</button><button data-f="man" style="font-family:'Comic Sans MS','Chalkboard SE','Marker Felt',cursive">Handwritten</button><button data-f="imp" style="font-family:Impact,'Arial Black',sans-serif">Impact</button></div>
 <label style="margin-top:18px">Item image</label>
 <div id="lk"><div class="srch"><input id="pin" type="password" inputmode="numeric" maxlength="4" placeholder="4-digit code" autocomplete="off"><button class="btn" id="pgo">OK</button></div><div class="hint" id="phn" style="margin:6px 0 0"></div></div>
-<div id="ul" style="display:none"><div class="fo"><label class="il" for="pic">📷 Choose</label><div class="il" id="prm" role="button" tabindex="0">🗑️ Remove</div><div class="il" id="exp" role="button" tabindex="0" style="grid-column:1/-1">⬇ Download page with my images</div></div></div>
+<div id="ul" style="display:none"><div class="fo"><label class="il" for="pic">📷 Choose</label><div class="il" id="prm" role="button" tabindex="0">🗑️ Remove</div></div></div>
 
 
 </div></div>
@@ -291,7 +291,7 @@ h1{letter-spacing:-.03em}
 <div class="toast" id="toast" role="status"></div>
 <script>
 (function(){
-var BAK={};var solde=10000;
+var solde=10000;
 var $=function(i){return document.getElementById(i)};
 function fmt(n){return n.toLocaleString('en-US')}
 function show(){$('bal').textContent=fmt(solde)}
@@ -399,7 +399,7 @@ document.querySelectorAll('.item .info,.item .pr .px').forEach(function(e){e.sty
 $('ibk').onclick=clI;document.addEventListener('keydown',function(e){if(e.key==='Escape')clI()});
 var nc=0;$('iadd').onclick=function(){nc++;$('cn').textContent=nc;toast('Added to cart.')};
 $('icart').onclick=function(){toast(nc?nc+' item(s) in your cart.':'Cart is empty.')};
-function ls(k,v){if(v===undefined){var r=null;try{r=localStorage.getItem(k)}catch(e){}return r!==null?r:(BAK[k]||null)}try{if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v);return true}catch(e){return null}}
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v);return true}catch(e){return null}}
 var artE=document.querySelector('.item .art'),artO=artE.innerHTML;
 function applyImg(d){if(d){artE.textContent='';var im=new Image();im.alt='';im.src=d;artE.appendChild(im);artE.style.background=ls('rbx-img-bg')||''}else{artE.innerHTML=artO;artE.style.background=''}}
 applyImg(ls('rbx-img-obj'));
@@ -463,21 +463,6 @@ function applyC(d){var w=document.querySelector('.citem .art');w.textContent='';
 document.getElementById('rL').addEventListener('click',function(){upT='c'});
 var cd=ls('rbx-img-c');if(cd)applyC(cd);
 function fakeNames(raw){var b=raw.replace(/\s+/g,'_').slice(0,18),h=hsh(b),y=2008+(h%16);var L=[b,b+'_'+((h%98)+1),'xX'+b+'Xx',b+y,'The'+b,b+'_Pro'],o=[];L.forEach(function(n){if(o.indexOf(n)<0)o.push(n)});return o}
-var IK=['rbx-img-obj','rbx-img-bg','rbx-img-h','rbx-img-hbg','rbx-img-c','rbx-img-cbg'];
-function buildPage(){var bak={};IK.forEach(function(k){var v=ls(k);if(v)bak[k]=v});
-var c=document.documentElement.cloneNode(true);c.removeAttribute('style');c.removeAttribute('data-theme');
-['ov','ov2','ov3','ov4','ov5','ov6','dr','hm','it2','bn','toast'].forEach(function(id){var e=c.querySelector('#'+id);if(e){e.classList.remove('on');if(id==='toast')e.textContent=''}});
-var t=c.querySelector('#bal');if(t)t.textContent='10,000';t=c.querySelector('#cn');if(t)t.textContent='0';
-c.querySelectorAll('.top .av,#dav,#hav,#bav').forEach(function(e){e.textContent='A'});
-var keep=null;c.querySelectorAll('script').forEach(function(sc){if(!keep&&sc.textContent.indexOf('var BAK=')>-1){keep=sc}else sc.parentNode.removeChild(sc)});
-if(!keep)return null;
-keep.textContent=keep.textContent.replace('var BAK={};','var BAK='+JSON.stringify(bak).replace(/</g,'\\u003c')+';');
-return '<!DOCTYPE html>\n'+c.outerHTML}
-function expPage(){var h=buildPage();if(!h){toast('Could not build the file.');return}
-var cl=window.claude&&window.claude.use?window.claude.use('downloads'):Promise.resolve(null);
-cl.then(function(dl){if(dl){return dl.save({filename:'index.html',data:h}).then(function(){toast('File saved.')},function(e){toast(e&&e.code==='declined'?'Cancelled.':'Could not save the file.')})}
-try{var u=URL.createObjectURL(new Blob([h],{type:'text/html'}));var a=document.createElement('a');a.href=u;a.download='index.html';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('File saved.')}catch(e){toast('Could not save the file.')}}).catch(function(){toast('Could not save the file.')})}
-$('exp').onclick=expPage;$('exp').onkeydown=function(e){if(e.key==='Enter'||e.key===' ')expPage()};
 })();
 </script>
 </body>

@@ -345,10 +345,31 @@ else if(hat===3)x+='<polygon points="28,26 30,10 40,20 50,6 60,20 70,10 72,26" f
 else if(hat===4)x+='<rect x="28" y="24" width="44" height="7" fill="'+hc+'"/>';
 return x+'</svg>'}
 function fillAv(el,e,c){if(typeof e==='string'&&e.indexOf('@@')===0){el.innerHTML=avSvg(e.slice(2));el.style.background=c}else{el.textContent=e;el.style.background=c}}
-function renderF(){var q=$('q').value.trim().toLowerCase();var fl=$('fl');fl.textContent='';
-FR.filter(function(f){return !q||f[0].toLowerCase().indexOf(q)>-1}).forEach(function(f){addRow(f[0],f[1],f[2],'@'+f[0])});
-var raw=$('q').value.trim();if(raw)fakeNames(raw).forEach(function(n){if(!FR.some(function(f){return f[0].toLowerCase()===n.toLowerCase()}))addRow(n,'@@'+n,'#2a2d36','@'+n)});
-$('fh').textContent=q?'Results':'My friends (8)'}
+function renderF(){
+  var q=$('q').value.trim().toLowerCase();
+  var fl=$('fl');
+  fl.textContent='';
+
+  FR.filter(function(f){
+    return !q || f[0].toLowerCase().indexOf(q)>-1;
+  }).forEach(function(f){
+    addRow(f[0],'@@'+f[0],f[2],'@'+f[0]);
+  });
+
+  var raw=$('q').value.trim();
+
+  if(raw){
+    fakeNames(raw).forEach(function(n){
+      if(!FR.some(function(f){
+        return f[0].toLowerCase()===n.toLowerCase();
+      })){
+        addRow(n,'@@'+n,'#2a2d36','@'+n);
+      }
+    });
+  }
+
+  $('fh').textContent=q?'Results':'My friends (8)';
+}
 function addRow(n,e,c,sub){
 var b=document.createElement('button');
 b.className='fr2';

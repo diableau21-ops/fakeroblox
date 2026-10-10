@@ -1,8 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -23,8 +25,7 @@ app.get('/api/user/:username', async (req, res) => {
       });
     }
 
-    const data = await response.json();
-    res.json(data);
+    res.json(await response.json());
   } catch (error) {
     res.status(500).json({
       error: 'Impossible de joindre Roblox.'

@@ -29,7 +29,7 @@ app.get('/api/user/:username', async (req, res) => {
       }
     );
 
-    const body = await response.text();
+    const result = await response.json();
 
     if (!response.ok) {
       return res.status(502).json({
@@ -38,4 +38,16 @@ app.get('/api/user/:username', async (req, res) => {
       });
     }
 
-    const result =
+    res.json({ data: result.data || [] });
+
+  } catch (error) {
+    console.error('Erreur serveur :', error);
+    res.status(500).json({
+      error: 'Impossible de joindre Roblox.'
+    });
+  }
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log('Serveur démarré sur le port ' + PORT);
+});

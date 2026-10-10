@@ -366,9 +366,10 @@ async function renderF() {
       encodeURIComponent(q)
     );
 
-    if (!response.ok) {
-      throw new Error('Recherche Roblox indisponible');
-    }
+  if (!response.ok) {
+  $('fh').textContent = 'Erreur serveur : ' + response.status;
+  return;
+}
 
     var data = await response.json();
     fl.textContent = '';

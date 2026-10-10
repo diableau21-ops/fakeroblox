@@ -392,7 +392,53 @@ async function renderF() {
     $('fh').textContent = 'Erreur de recherche. Réessaie.';
     console.log('Erreur Roblox :', error);
   }
-}function openSend(){sel=null;$('sb').textContent=fmt(solde);$('q').value='';renderF();$('st1').style.display='block';$('st2').style.display='none';$('st3').style.display='none';$('st4').style.display='none';$('st5').style.display='none';clearTimeout(snd);$('ov').classList.add('on');$('q').focus()}
+}async function afficherAvatarRoblox(username, element) {
+  try {
+    const response = await fetch(
+      'https://roblox-search-server.onrender.com/api/user/' +
+      encodeURIComponent(username)
+    );
+
+    const data = await response.json();
+    const joueur = data.data && data.data.find(function(user) {
+      return user.name.toLowerCase() === username.toLowerCase();
+    });
+
+    if (!joueur) {
+      element.textContent = '?';
+      return;
+    }
+
+    const avatarResponse = await fetch(
+      'https://roblox-search-server.onrender.com/api/avatar/' +
+      joueur.id
+    );
+
+    const avatarData = await avatarResponse.json();
+    const imageUrl = avatarData.data &&
+      avatarData.data[0] &&
+      avatarData.data[0].imageUrl;
+
+    if (!imageUrl) {
+      element.textContent = '?';
+      return;
+    }
+
+    element.textContent = '';
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.alt = 'Avatar de ' + joueur.name;
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'cover';
+    img.style.borderRadius = '50%';
+    element.appendChild(img);
+  } catch (error) {
+    console.log('Erreur avatar Roblox :', error);
+    element.textContent = '?';
+  }
+}
+function openSend(){sel=null;$('sb').textContent=fmt(solde);$('q').value='';renderF();$('st1').style.display='block';$('st2').style.display='none';$('st3').style.display='none';$('st4').style.display='none';$('st5').style.display='none';clearTimeout(snd);$('ov').classList.add('on');$('q').focus()}
 $('q').oninput=renderF;
 $('bk').onclick=function(){$('st2').style.display='none';$('st1').style.display='block';$('q').focus()};
 $('close').onclick=function(){$('ov').classList.remove('on')};

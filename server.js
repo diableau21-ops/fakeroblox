@@ -16,29 +16,41 @@ app.get('/api/user/:username', async (req, res) => {
     const username = req.params.username;
 
     const response = await fetch(
-      'https://users.roblox.com/v1/users/search?keyword=' +
-      encodeURIComponent(username) +
-      '&limit=10'
+      'https://users.roblox.com/v1/usernames/users',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          usernames: [username],
+          excludeBannedUsers: false
+        })
+      }
     );
 
     const body = await response.text();
 
     if (!response.ok) {
-      console.error('Erreur Roblox :', response.status, body);
-
       return res.status(502).json({
         error: 'La recherche Roblox a échoué.',
         statusRoblox: response.status
       });
     }
 
-    res.type('application/json').send(body);
+    const result = JSON.parse(body);
+
+    res.json({
+      data: result.data || []
+    });
   } catch (error) {
     console.error('Erreur serveur :', error);
 
     res.status(500).json({
       error: 'Impossible de joindre Roblox.'
     });
+  }
+});
   }
 });
 

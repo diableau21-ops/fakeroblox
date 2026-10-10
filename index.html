@@ -440,7 +440,15 @@ async function renderF() {
   }
 }
 function openSend(){sel=null;$('sb').textContent=fmt(solde);$('q').value='';renderF();$('st1').style.display='block';$('st2').style.display='none';$('st3').style.display='none';$('st4').style.display='none';$('st5').style.display='none';clearTimeout(snd);$('ov').classList.add('on');$('q').focus()}
-$('q').oninput=renderF;
+var rechercheTimer;
+
+$('q').oninput = function() {
+  clearTimeout(rechercheTimer);
+
+  rechercheTimer = setTimeout(function() {
+    renderF();
+  }, 800);
+};
 $('bk').onclick=function(){$('st2').style.display='none';$('st1').style.display='block';$('q').focus()};
 $('close').onclick=function(){$('ov').classList.remove('on')};
 $('ov').onclick=function(e){if(e.target===$('ov'))$('ov').classList.remove('on')};

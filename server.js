@@ -51,8 +51,6 @@ app.get('/api/user/:username', async (req, res) => {
     });
   }
 });
-  }
-});
 
 app.get('/api/avatar/:id', async (req, res) => {
   try {

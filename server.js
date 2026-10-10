@@ -13,20 +13,29 @@ app.get('/', (req, res) => {
 
 app.get('/api/user/:username', async (req, res) => {
   try {
+    const username = req.params.username;
+
     const response = await fetch(
       'https://users.roblox.com/v1/users/search?keyword=' +
-      encodeURIComponent(req.params.username) +
+      encodeURIComponent(username) +
       '&limit=10'
     );
 
+    const body = await response.text();
+
     if (!response.ok) {
+      console.error('Erreur Roblox :', response.status, body);
+
       return res.status(502).json({
-        error: 'La recherche Roblox a échoué.'
+        error: 'La recherche Roblox a échoué.',
+        statusRoblox: response.status
       });
     }
 
-    res.json(await response.json());
+    res.type('application/json').send(body);
   } catch (error) {
+    console.error('Erreur serveur :', error);
+
     res.status(500).json({
       error: 'Impossible de joindre Roblox.'
     });
@@ -41,13 +50,16 @@ app.get('/api/avatar/:id', async (req, res) => {
       '&size=150x150&format=Png&isCircular=true'
     );
 
+    const body = await response.text();
+
     if (!response.ok) {
       return res.status(502).json({
-        error: 'Impossible de charger l’avatar.'
+        error: 'Impossible de charger l’avatar.',
+        statusRoblox: response.status
       });
     }
 
-    res.json(await response.json());
+    res.type('application/json').send(body);
   } catch (error) {
     res.status(500).json({
       error: 'Impossible de joindre Roblox.'
